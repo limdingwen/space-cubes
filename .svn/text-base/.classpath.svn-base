@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Cubeland/native/macosx"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="/Users/wen/Downloads/lwjgl-2.8.4/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="/Users/wen/Downloads/lwjgl-2.8.4/jar/lwjgl-debug.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Cubeland/native/macosx"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/wen/Downloads/lwjgl-2.8.4/jar/jinput.jar"/>
+	<classpathentry kind="lib" path="/Users/wen/Downloads/slick-util.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

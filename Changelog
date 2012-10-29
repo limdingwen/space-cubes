@@ -1,0 +1,139 @@
+Pre-Alpha 0.0.1 12w391:
+Initial release
+
+Pre-alpha 0.0.2 12w395:
+Rewrote rendering engine to stage/actor map
+
+Pre-alpha 0.0.2 12w401:
+Rewrote rendering engine to support blocks
+
+Pre-alpha 0.0.3 12w403:
+Added materials, allowing for more blocks
+
+Pre-alpha 0.1.0 12w405:
+Added camera concept
+
+Pre-alpha 0.1.1 12w406:
+Working camera
+Changed from orothogrphic to perspective
+
+Pre-alpha 0.1.2 12w407:
+Physics added.
+Buggy FPS controller (SINE was inverted) added.
+Look-around added.
+
+Pre-alpha 0.1.3 12w40a:
+Basic collision detection added and fixed.
+FPS controller fixed.
+Basic world generation added.
+
+Pre-alpha 0.2.0 12w40f:
+Rewrote entire materials, block renderer and world engine to support the new Material type.
+Dirt, stone and voidrock classes removed.
+Respawning was added.
+Camera view was changed to 2 blocks height.
+
+Pre-alpha 0.2.1 12w40g:
+Enabled basic occulsional culling by only rendering blocks beside transparent materials.
+Implemented block place and break events
+Added block breaking
+
+Pre-alpha 0.2.2 12w40h:
+Changed default chunks-per-world to 4 (2x2)
+Repositioned logic in BlockRenderEngine, making it only process the OpenGL only if it is seen, 
+as opposed to last time when OpenGL was processed first. FPS increased by x2. YAAAAAY!!! xD
+Physics now uses fixed updating.
+Fixed a bug in which colliders don't disappear when blocks are broken.
+First public release.
+
+Pre-alpha 0.2.2 12w40i:
+Fixed a bug in which blocks don't render correctly at the edge of the map.
+Changed map height to 200.
+Added more performance optimisations
+Drank some coffee
+Added noise to dirt levels 48 and above
+Tested:
+ - 3x3 chunks (9 chunks in memory). Laggy as hell.
+ - Turning off physics (No effect)
+ - Adding a whole lot of noise. Lots of blocks on screen and laggy as hell.
+ Conclusion: Rendering is what causes lag. Not the physics/stage.
+Wish me luck for EOY!
+
+Pre-alpha 0.2.2 12w40j:
+I won't be doing much development today, exams tomorrow.
+Repositioned logic so that air won't be calculated for culling. Argh.
+Changed map height to 256.
+Implemented face culling so that only visible faces will be rendered.
+Changed it such that blocks only calculate culling when it is updated.
+Implemented loading by chunk-basis, allowing for dynamic generation and chunk culling.
+*IN PROGRESS* Adding chunk culling (only load the chunk when it is in view)
+Changed it such that the chunk only calculates locality during generation.
+Rewrote rendering engine to chunk-block basis instead of stage-actor basis for blocks.
+Rewrote collision engine ^
+Changed collision engine to collide only with same chunk! AWWW YEAAAH
+Changed block engine to id-based. Update block now managed by a whole, saving memory.
+
+Pre-alpha 0.3.0 12w41a:
+Added file format...
+Added level loading and saving
+Implementing chunk loading, unloading and caching!
+Added depth to blocks
+Added metadata values to blocks
+Changed grass id to 1:1
+Changed stone to rock.
+Added cracked rock.
+BUG: Random un-updated blocks on world load.
+Increased map size to 5x5
+Added respawning (R)
+Managed to compress files by 164 times.
+Changed world height to 128
+Changed sky color to 1,0.5f,1,1 (Dark-cyan)
+
+Pre-alpha 0.3.1 12w42a:
+Added automatic chunk saving (only the one that player is in)
+Fixed un-updated blocks
+
+Pre-alpha 0.3.1 12w42b:
+Cut down collision time
+Now saves player position, rotation and time
+Fixed a major bug
+Added time
+Added changing sky colors
+
+Pre-alpha 0.4.0 12w431:
+Added grass-dirt world natural conversion
+Added lighting
+Added EventEngine and Listeners API
+Changed debug format of logging
+Added untested version of plugin API: Do not use!
+
+Pre-alpha 0.5.0 12w432:
+Added plugin API: Tested and ready to use!
+Added plugin-specific logger
+
+Pre-alpha 0.5.0 12w433:
+Added wall-collision detection
+Physics now partially runs in a different thread.
+Removed a debug class print from plugin API
+Fixed Unamed Plugin bug
+Added Material property seeThru for block culling instead of notSolid.
+Physics now based on notSolid.
+Added ground clipping.
+Changed ground clipping to only if the block above is not solid.
+
+Pre-alpha 0.5.0 12w434:
+Physics now no longer run in a different thread.
+Only clips when moving downwards: Huge improvement in jagginess
+Added chunk leaking
+Added classes: ChunkLeaker and LeakedChunk
+Added function to World: toFirstChunk(Vector3i) : Vector3i;
+Physics now only collide to a 3-block radius (7x7x7)
+Known bugs:
+- Sometimes you can get stuck to a wall.
+
+Pre-alpha 0.5.0 12w441:
+Now you can bump your head on the ceiling.
+Crash report format changed
+Introduced ChunkManagementTask
+Chunks now generate on-the-fly.
+Worlds now only load the spawn chunk on load.

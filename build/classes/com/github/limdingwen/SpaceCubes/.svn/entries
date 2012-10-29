@@ -1,0 +1,117 @@
+8
+
+dir
+2
+https://riouxsvn.com/svn/spacecubes/Space%20Cubes/build/classes/com/github/limdingwen/SpaceCubes
+https://riouxsvn.com/svn/spacecubes
+
+
+
+2012-10-13T07:02:09.015750Z
+2
+limdingwen
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+dd502755-9cc3-4376-b585-bf8f1c26c6c3
+
+BlockTypes
+dir
+
+Collision
+dir
+
+Debug.class
+file
+
+
+
+
+2012-10-13T04:29:30.000000Z
+26577504c11d8cc372be8cac64deda2a
+2012-10-13T07:02:09.015750Z
+2
+limdingwen
+has-props
+
+EntityTypes
+dir
+
+Events
+dir
+
+File
+dir
+
+GUI
+dir
+
+Main.class
+file
+
+
+
+
+2012-10-13T05:37:20.000000Z
+ae940c85c5f6a6025356996bfaac250e
+2012-10-13T07:02:09.015750Z
+2
+limdingwen
+has-props
+
+Physic.class
+file
+
+
+
+
+2012-10-13T05:37:20.000000Z
+94986efa3d56b0c74d088e9605885697
+2012-10-13T07:02:09.015750Z
+2
+limdingwen
+has-props
+
+Rendering
+dir
+
+Vector2i.class
+file
+
+
+
+
+2012-10-13T04:29:30.000000Z
+73a086295a89c612a2b7e110ca87c194
+2012-10-13T07:02:09.015750Z
+2
+limdingwen
+has-props
+
+Vector3i.class
+file
+
+
+
+
+2012-10-13T04:29:30.000000Z
+a4131b2ed4e483c872dc0909062675b3
+2012-10-13T07:02:09.015750Z
+2
+limdingwen
+has-props
+
+World
+dir
+

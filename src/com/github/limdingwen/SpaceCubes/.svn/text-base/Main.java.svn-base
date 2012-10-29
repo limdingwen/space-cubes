@@ -1,0 +1,136 @@
+package com.github.limdingwen.SpaceCubes;
+
+import com.github.limdingwen.SpaceCubes.EntityTypes.Player.Player;
+import com.github.limdingwen.SpaceCubes.Events.IOEngine;
+import com.github.limdingwen.SpaceCubes.File.ChunkLevelEncoder;
+import com.github.limdingwen.SpaceCubes.Rendering.BlockRenderEngine;
+import com.github.limdingwen.SpaceCubes.Rendering.RenderEngine;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.util.vector.Vector3f;
+
+public class Main {
+	
+	// VERSION: <Alpha/Beta/Release> <Version> Snapshot <Year>w<Week><Build>
+	
+	public static final String VERSION_NO = "Pre-Alpha 0.2.2 Snapshot 12w41a [Developer] [Private]";
+	
+	public static final int FPS = 200;
+	
+	public static RenderEngine renderer = new RenderEngine();
+	
+	public static int width;
+	public static int height;
+	
+	public static Vector3f spawn = new Vector3f(0 * (BlockRenderEngine.doubleBs),
+			66 * (BlockRenderEngine.doubleBs), 
+			0 * (BlockRenderEngine.doubleBs));
+	public static Player player = new Player(null, new Vector3f(spawn.x, spawn.y, spawn.z), 
+			new Vector3f(-90,0,0), 0, RenderEngine.getStage());
+	
+	public static float dt;
+	private long lastTime;
+	
+	public static int chunkUpdates = 0;
+	public static int verts = 0;
+	public static int blocks = 0;
+		
+	public static void main(String[] args) {
+		System.out.println("Space Cubes version is " + VERSION_NO);
+		System.out.println();
+		
+		Main Test1 = new Main();
+		System.out.println("Created Space Cubes.");
+		Test1.start();
+	}
+	
+	public void start() {
+		try {
+			Display.setDisplayMode(new DisplayMode(800,800));
+			Display.create();
+			Display.setTitle("Space Cubes " + VERSION_NO);
+			Display.sync(FPS);
+			Display.setResizable(true);
+			System.out.println("Created display.");
+			
+			// Get width and height
+			
+			width = Display.getWidth();
+			height = Display.getHeight();
+			
+			// Lock mouse in frame
+			
+			Mouse.setGrabbed(true);
+		} catch (LWJGLException e) {
+			System.out.println("Space Cubes has crashed on startup!");
+			System.out.println("-- BEGIN ERROR REPORT --");
+			e.printStackTrace();
+			System.out.println("-- END ERROR REPORT --");
+			System.out.println("Please submit this report to limdingwen@gmail.com.");
+			
+			System.exit(0);
+		}
+		
+		renderer.init();
+		
+		System.out.println("Initialized renderer.");
+		
+		while (!Display.isCloseRequested()) {
+			long timeUsed = Sys.getTime();
+			
+			renderer.render();
+			renderer.update();
+			
+			long renderTime = Sys.getTime() - timeUsed;
+			int rrenderTime = (int) Math.floor(renderTime);
+			
+			long processTime = Sys.getTime();
+			player.playerUpdate();
+			IOEngine.poll();
+			processTime = Sys.getTime() - processTime;
+			int rprocessTime = (int) Math.floor(processTime);
+			
+			//Debug.debugCamera(RenderEngine.camera);
+			//Debug.debugPosition(player, new Vector2f(100, 50));
+			
+			// Time sync
+			
+			dt = (Sys.getTime() - lastTime)/4f;
+			lastTime = Sys.getTime();
+			
+	//		Display.setTitle(player.translation.toString());
+			
+			long fps = Sys.getTimerResolution()/(Sys.getTime() - timeUsed);
+			int rfps = (int) Math.floor(fps);
+			
+			Display.setTitle(
+					"R:" + Integer.toString(rrenderTime) +
+					"ms P: " + Integer.toString(rprocessTime) +
+					"ms FPS: " + Integer.toString(rfps) +
+					" CUpdt: " + Integer.toString(chunkUpdates) + 
+					" V: " + Integer.toString(verts) +
+					" B: " + Integer.toString(blocks) +
+					" Hand: " + player.inHand.name);
+			verts = 0;
+			chunkUpdates = 0;
+			blocks = 0;
+			
+			// Update display
+		    Display.update();
+		}
+		
+		// Stopped (out of main loop)
+		
+		// Save level
+				
+		Display.destroy();
+		ChunkLevelEncoder.encodeWorld("TestWorld", RenderEngine.world, true);
+
+		System.out.println();
+		System.out.println("Destroyed display");
+		System.out.println("Stopped with no errors!");
+	}	
+}

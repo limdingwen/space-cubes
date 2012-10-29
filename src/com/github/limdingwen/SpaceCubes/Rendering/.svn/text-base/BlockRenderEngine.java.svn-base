@@ -1,0 +1,34 @@
+package com.github.limdingwen.SpaceCubes.Rendering;
+
+import com.github.limdingwen.SpaceCubes.BlockTypes.Block;
+import com.github.limdingwen.SpaceCubes.BlockTypes.Material;
+
+public class BlockRenderEngine {
+	public static final float blockSize = 0.25f;
+	
+	public static float doubleBs = blockSize*2;
+
+	public BlockRenderEngine() {
+		PrimitivesEngine.init(); // Init after init blockSize
+	}
+	
+	public void render(Block block) throws IndexOutOfBoundsException {
+		// Get rendering faces
+/*
+		GL11.glTranslatef(block.translation.x*doubleBs, 
+				block.translation.y*(doubleBs),
+				block.translation.z*(doubleBs));
+*/
+		// Finally, render.
+		PrimitivesEngine.clColorCube(blockSize, Material.getMaterialFromID(block.material, block.meta).color.x, 
+				Material.getMaterialFromID(block.material, block.meta).color.y, Material.getMaterialFromID(block.material, block.meta).color.z,
+				block.front, block.left, block.right, block.up, block.bottom, block.back, block.notUnderTheSun,
+				block.translation.x*doubleBs,
+				block.translation.y*doubleBs,
+				block.translation.z*doubleBs);
+/*
+		GL11.glTranslatef(-block.translation.x*(doubleBs), 
+				-block.translation.y*(doubleBs), 
+				-block.translation.z*(doubleBs));*/
+	}
+}

@@ -1,0 +1,28 @@
+package com.github.limdingwen.SpaceCubes;
+
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
+import org.newdawn.slick.TrueTypeFont;
+
+import com.github.limdingwen.SpaceCubes.EntityTypes.Player.Player;
+import com.github.limdingwen.SpaceCubes.GUI.GUIFont;
+import com.github.limdingwen.SpaceCubes.Rendering.Camera;
+
+public class Debug {
+	public static TrueTypeFont font;
+	
+	public static void init(String fontName, int fontType, int fontIOType, int size) {
+		font = GUIFont.newFont(fontName, fontType, size, fontIOType);
+	}
+	
+	public static void debugCamera(Camera camera) {
+		Display.setTitle("Pitch: " + camera.pitch + " Yaw: " + camera.yaw + " Roll:" + camera.roll);
+	}
+	
+	public static void debugPosition(Player player, Vector2f textPos) {
+		GL11.glLoadIdentity();
+		
+		font.drawString(textPos.x, textPos.y, "X: " + player.translation.x + " Y: " + player.translation.y + " Z: " + player.translation.z);
+	}
+}
