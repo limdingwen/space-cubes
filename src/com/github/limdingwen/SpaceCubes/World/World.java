@@ -10,7 +10,7 @@ import com.github.limdingwen.SpaceCubes.DataTypes.Vector3i;
 import com.github.limdingwen.SpaceCubes.Rendering.BlockRenderEngine;
 
 public class World {
-	public static final int WORLD_LENGTH = 10;
+	public static final int WORLD_LENGTH = 30;
 	
 	public Chunk[][] chunks = new Chunk[WORLD_LENGTH][WORLD_LENGTH];
 	public static final int CHUNK_LENGTH = 16;

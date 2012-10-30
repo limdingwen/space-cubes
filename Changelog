@@ -131,9 +131,23 @@ Physics now only collide to a 3-block radius (7x7x7)
 Known bugs:
 - Sometimes you can get stuck to a wall.
 
-Pre-alpha 0.5.0 12w441:
+Pre-alpha 0.5.1 12w441:
 Now you can bump your head on the ceiling.
 Crash report format changed
 Introduced ChunkManagementTask
-Chunks now generate on-the-fly.
-Worlds now only load the spawn chunk on load.
+Chunks now generate and (un)load on-the-fly.
+Worlds now only load/generate the spawn chunk on load.
+World length increased to 10.
+Physics now operate in Timers. (60tps)
+^ But not collision
+Changed working directory to <folder>/SpaceCubes.
+Fixed Natives errors
+
+Pre-alpha 0.5.1 12w442:
+Fixed falling through world during chunk generation and first world load
+Realistified jumping values
+Added chunk culling
+Added directions
+Found bug:
+Able to jump out of 2-block holes using corners
+Changed world length to 30

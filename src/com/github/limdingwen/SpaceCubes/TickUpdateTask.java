@@ -36,46 +36,49 @@ public class TickUpdateTask extends TimerTask {
 					for (int iz = 0; iz < World.CHUNK_LENGTH; iz++) {
 						Block b = c.blocks[ix][iy][iz];
 
-						// Update dirt to grass
+						if (b != null) {
 
-						if (Material.getMaterialFromID(b.material, b.meta) == Material.DIRT) {
-							if (Math.round(Math.random()*50) == 0) {
-								Block bTop;
+							// Update dirt to grass
 
-								try {
-									bTop = c.blocks[ix][iy + 1][iz];
-								}
-								catch (Exception e) {
-									break;
-								}
+							if (Material.getMaterialFromID(b.material, b.meta) == Material.DIRT) {
+								if (Math.round(Math.random()*50) == 0) {
+									Block bTop;
 
-								if (Material.getMaterialFromID(bTop.material, bTop.meta).transparent) {
-									b.material = Material.GRASS.id;
-									b.meta = Material.GRASS.meta;
+									try {
+										bTop = c.blocks[ix][iy + 1][iz];
+									}
+									catch (Exception e) {
+										break;
+									}
 
-									Block.updateBlock(b, true, true);
+									if (Material.getMaterialFromID(bTop.material, bTop.meta).transparent) {
+										b.material = Material.GRASS.id;
+										b.meta = Material.GRASS.meta;
+
+										Block.updateBlock(b, true, true);
+									}
 								}
 							}
-						}
 
-						// Update grass to dirt
+							// Update grass to dirt
 
-						if (Material.getMaterialFromID(b.material, b.meta) == Material.GRASS) {
-							if (Math.round(Math.random()*50) == 0) {
-								Block bTop;
+							if (Material.getMaterialFromID(b.material, b.meta) == Material.GRASS) {
+								if (Math.round(Math.random()*50) == 0) {
+									Block bTop;
 
-								try {
-									bTop = c.blocks[ix][iy + 1][iz];
-								}
-								catch (Exception e) {
-									break;
-								}
+									try {
+										bTop = c.blocks[ix][iy + 1][iz];
+									}
+									catch (Exception e) {
+										break;
+									}
 
-								if (!Material.getMaterialFromID(bTop.material, bTop.meta).transparent) {
-									b.material = Material.DIRT.id;
-									b.meta = Material.DIRT.meta;
+									if (!Material.getMaterialFromID(bTop.material, bTop.meta).transparent) {
+										b.material = Material.DIRT.id;
+										b.meta = Material.DIRT.meta;
 
-									Block.updateBlock(b, true, true);
+										Block.updateBlock(b, true, true);
+									}
 								}
 							}
 						}

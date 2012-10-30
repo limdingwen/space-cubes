@@ -112,7 +112,7 @@ public class PhysicCollisionRunnable {
 							}
 
 							if (Collision.isBoxColliding((BoxCollider) block.col, new Vector3f(object.translation.x,
-									object.translation.y + BlockRenderEngine.BLOCK_SIZE*4,
+									object.translation.y + BlockRenderEngine.BLOCK_SIZE*3.3f,
 									object.translation.z))) {
 
 								if (checkWalls) feedback.collidedAtHead = true;

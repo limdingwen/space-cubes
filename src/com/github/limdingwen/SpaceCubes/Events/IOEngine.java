@@ -15,13 +15,13 @@ public class IOEngine {
 	public static void poll() {
 		
 		// Player walking
-		if (Keyboard.isKeyDown(Keyboard.KEY_W)) 
+		if (Keyboard.isKeyDown(Keyboard.KEY_W))
 			EventEngine.executeEvent(EventEngine.PLAYER, "playerMove", new PlayerMoveEvent(0f, -1f));
-		if (Keyboard.isKeyDown(Keyboard.KEY_S)) 
+		if (Keyboard.isKeyDown(Keyboard.KEY_S))
 			EventEngine.executeEvent(EventEngine.PLAYER, "playerMove", new PlayerMoveEvent(0f, 1f));
-		if (Keyboard.isKeyDown(Keyboard.KEY_A)) 
+		if (Keyboard.isKeyDown(Keyboard.KEY_A))
 			EventEngine.executeEvent(EventEngine.PLAYER, "playerMove", new PlayerMoveEvent(-1f, 0f));
-		if (Keyboard.isKeyDown(Keyboard.KEY_D)) 
+		if (Keyboard.isKeyDown(Keyboard.KEY_D))
 			EventEngine.executeEvent(EventEngine.PLAYER, "playerMove", new PlayerMoveEvent(1f, 0f));
 		
 		// Player jumping

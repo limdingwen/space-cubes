@@ -59,6 +59,13 @@ public class RenderEngine {
 		GL11.glFogf(GL11.GL_FOG_DENSITY, density);
 
 		Debug.info("Initalized OpenGL");
+		
+		// World default
+
+		Display.setTitle("Building world....");
+
+		world = ChunkLevelParser.parseWorld("TestWorld");
+		WorldEngine.loadWorldIntoMemory(world);
 
 		// Set player and time
 
@@ -67,58 +74,68 @@ public class RenderEngine {
 		try {
 			ld = LevelDataParser.parseLevel("TestWorld");
 
+			world.time = ld.time;
 			Main.player.translation = ld.playerPosition;
 			Main.player.rotation = ld.playerRotation;
 		} catch (IOException e) {
 			Debug.warning("Cannot find level.dat, using defaults.");
+			
+			// Init spawn point
+			
+			Chunk ch = null;
+			Vector2i chPos = new Vector2i(0, 0);
 
-			Main.player.translation = new Vector3f(0,0,0);
+			try {
+				ch = RenderEngine.world.getChunkAtBlockCoords(World.coordRealToBlock(Main.spawn));
+				chPos = World.getChunkPosAtBlockCoords(World.coordRealToBlock(Main.spawn));
+			}
+			catch (ArrayIndexOutOfBoundsException ex) {
+				ch = RenderEngine.world.chunks[0][0];
+
+				Debug.error("Invalid spawn location: Resetting to 0,0,0");
+				Main.spawn = new Vector3f();
+			}
+
+			// Load spawn chunk
+						
+			try {
+				ch.blocks = ChunkLevelParser.parseChunk("TestWorld", chPos.x, chPos.y).blocks;
+				ch.moveGraphics();
+			} catch (IOException ex) {
+				Debug.warning("Unable to parse ch " + chPos.x + ", " + chPos.y);
+				Debug.warning("Generating ch!");
+
+				Logger.getLogger(ChunkLevelParser.class.getName()).log(Level.INFO, null, e);
+
+				// Generate new chunk
+
+				ch.generate();
+				ch.moveGraphics();
+			}
+
+			ch.loadChunk();
+			
+			Block spawnBlock = RenderEngine.world.getTopBlock(World.coordRealToBlock(Main.spawn).x,
+					World.coordRealToBlock(Main.spawn).z);
+
+			Vector3i spawnBlockVec;
+
+			if (spawnBlock == null) {
+				spawnBlockVec = new Vector3i(0, World.CHUNK_HEIGHT, 0);
+			}
+			else {
+				spawnBlockVec = spawnBlock.translation;
+			}
+
+			Main.spawn = new Vector3f(
+					spawnBlockVec.x * BlockRenderEngine.doubleBs,
+					(spawnBlockVec.y + 1) * BlockRenderEngine.doubleBs,
+					spawnBlockVec.z * BlockRenderEngine.doubleBs);
+			
+			Main.player.translation.x = Main.spawn.x;
+			Main.player.translation.y = Main.spawn.y;
+			Main.player.translation.z = Main.spawn.z;
 		}
-
-		// World default
-
-		Display.setTitle("Building world....");
-
-		world = ChunkLevelParser.parseWorld("TestWorld", Main.player.translation);
-		WorldEngine.loadWorldIntoMemory(world);
-
-		Vector2i chunkPos = World.getChunkPosAtBlockCoords(
-				World.coordRealToBlock(Main.player.translation));
-
-		if (ld != null) world.time = ld.time;
-
-		// Init spawn point
-		/*
-		Chunk ch = null;
-		Vector2i chPos = new Vector2i(0, 0);
-
-		try {
-			ch = RenderEngine.world.getChunkAtBlockCoords(World.coordRealToBlock(Main.spawn));
-			chPos = World.getChunkPosAtBlockCoords(World.coordRealToBlock(Main.spawn));
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-			ch = RenderEngine.world.chunks[0][0];
-
-			Debug.error("Invalid spawn location: Resetting to 0,0,0");
-			Main.spawn = new Vector3f();
-		}
-
-		Block spawnBlock = RenderEngine.world.getTopBlock(World.coordRealToBlock(Main.spawn).x,
-				World.coordRealToBlock(Main.spawn).z);
-
-		Vector3i spawnBlockVec;
-
-		if (spawnBlock == null) {
-			spawnBlockVec = new Vector3i(0, World.CHUNK_HEIGHT, 0);
-		}
-		else {
-			spawnBlockVec = spawnBlock.translation;
-		}
-
-		Main.spawn = new Vector3f(
-				spawnBlockVec.x * BlockRenderEngine.doubleBs,
-				(spawnBlockVec.y + 1) * BlockRenderEngine.doubleBs,
-				spawnBlockVec.z * BlockRenderEngine.doubleBs);*/
 	}
 
 	public void render() {
@@ -134,7 +151,7 @@ public class RenderEngine {
 			for (int iz = 0; iz < World.WORLD_LENGTH; iz++) {
 				// For every chunk...
 
-				if (world.chunks[ix][iz].getIsLoaded()) {
+				if (world.chunks[ix][iz].getIsLoaded() && world.chunks[ix][iz].render) {
 					// If it is loaded
 
 					Chunk chunk = world.chunks[ix][iz];

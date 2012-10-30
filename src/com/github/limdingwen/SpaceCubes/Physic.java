@@ -7,7 +7,7 @@ import com.github.limdingwen.SpaceCubes.Rendering.Actor;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Physic extends TimerTask {	
-	public static final float GRAVITY = 0.015f;
+	public static final float GRAVITY = 0.01f;
 	public static final float TERM_VELOCITY = 0.5f;
 
 	public Vector3f velocity = new Vector3f();

@@ -14,5 +14,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/wen/Downloads/PNGDecoder.jar"/>
+	<classpathentry kind="lib" path="/Users/wen/Downloads/jna.jar"/>
+	<classpathentry kind="lib" path="/Users/wen/Downloads/guava-13.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -30,9 +30,9 @@ public class Main {
 	
 	// VERSION: <Alpha/Beta/Release> <Version> Snapshot <Year>w<Week><Build>
 	
-	public static final String VERSION_NO = "Pre-Alpha 0.5.0 Snapshot 12w434 [Developer] [Private]";
+	public static final String VERSION_NO = "Pre-Alpha 0.5.1 Snapshot 12w441 [Developer] [Private]";
 	
-	public static final int FPS = 200;
+	public static final int FPS = 60;
 	
 	public static RenderEngine renderer = new RenderEngine();
 	
@@ -91,7 +91,6 @@ public class Main {
 			Display.create();
 			Display.setTitle("Space Cubes " + VERSION_NO);
 			Display.sync(FPS);
-			Display.setResizable(true);
 			
 			Debug.info("Created display.");
 			
@@ -130,7 +129,7 @@ public class Main {
 		
 		saveTimer.scheduleAtFixedRate(new SaveTask(), 5000, 5000);
 		tickTimer.scheduleAtFixedRate(new TickUpdateTask(), 0, 50);
-		chunkTimer.scheduleAtFixedRate(new ChunkManagementTask(), 0, 150);
+		chunkTimer.scheduleAtFixedRate(new ChunkManagementTask(), 0, 200);
 
 		while (!Display.isCloseRequested()) {
 			long timeUsed = Sys.getTime();
@@ -158,11 +157,51 @@ public class Main {
 			for (int ix = 0; ix < World.WORLD_LENGTH; ix++) {
 				for (int iz = 0; iz < World.WORLD_LENGTH; iz++) {
 					chunkLoads[ix][iz] = false;
+					RenderEngine.world.chunks[ix][iz].render = false;
 				}
 			}
 			
 			for (int ix = playerChunkPos.x - CHUNK_LOAD_RADIUS; ix <= playerChunkPos.x + CHUNK_LOAD_RADIUS; ix++) {
 				for (int iz = playerChunkPos.y - CHUNK_LOAD_RADIUS; iz <= playerChunkPos.y + CHUNK_LOAD_RADIUS; iz++) {
+					int ix2 = ix - playerChunkPos.x;
+					int iz2 = iz - playerChunkPos.y;
+					
+					byte sx = 0;
+					byte sz = 0;
+					
+					if (ix2 < 0) sz = -1;
+					else if (ix2 > 0) sz = 1;
+					
+					if (iz2 < 0) sx = -1;
+					else if (iz2 > 0) sx = 1;
+					
+					// Set up rules
+					
+					byte ruleX = 0;
+					byte ruleZ = 0;
+					
+					switch (player.direction) {
+					case Player.NORTH: ruleZ = 1; break;
+					case Player.NORTHEAST: ruleZ = 1; ruleX = 1; break;
+					case Player.EAST: ruleX = 1; break;
+					case Player.SOUTHEAST: ruleZ = -1; ruleX = 1; break;
+					case Player.SOUTH: ruleZ = -1; break;
+					case Player.SOUTHWEST: ruleZ = -1; ruleX = -1; break;
+					case Player.WEST: ruleX = -1; break;
+					case Player.NORTHWEST: ruleZ = 1; ruleX = -1; break;
+					}
+
+					if (sx == 0) sx = ruleX;
+					if (sz == 0) sz = ruleZ;
+										
+					if ((sx == ruleX || ruleX == 0) && (sz == ruleZ || ruleZ == 0)) {
+						try {
+							RenderEngine.world.chunks[ix][iz].render = true;
+						}
+						catch (ArrayIndexOutOfBoundsException e) {
+						}
+					}
+					
 					try {
 						chunkLoads[ix][iz] = true;
 					}
@@ -234,7 +273,8 @@ public class Main {
 					":" + (int) Math.floor((RenderEngine.world.time/20)%60) + 
 					" Mem: " + (Runtime.getRuntime().totalMemory() - 
 									Runtime.getRuntime().freeMemory())
-									/ Runtime.getRuntime().maxMemory() * 100 + "%");
+									/ Runtime.getRuntime().maxMemory() * 100 + "%" +
+					" Dir: " + Player.decodeDirectionToString(player.direction));
 			
 			verts = 0;
 			chunkUpdates = 0;
@@ -251,6 +291,10 @@ public class Main {
 			if (RenderEngine.world.time >= World.EVENING && RenderEngine.world.time < World.NIGHT) GL11.glClearColor(evening.x, evening.y, evening.z, 1);
 			if (RenderEngine.world.time >= World.NIGHT && RenderEngine.world.time < World.MIDNIGHT) GL11.glClearColor(night.x, night.y, night.z, 1);
 			if (RenderEngine.world.time >= World.MIDNIGHT) GL11.glClearColor(midnight.x, midnight.y, midnight.z, 1);
+		
+			if (fps > 60) {
+				
+			}
 		}
 		
 		// Stopped (out of main loop)

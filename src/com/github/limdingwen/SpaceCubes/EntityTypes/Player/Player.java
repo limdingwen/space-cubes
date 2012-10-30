@@ -38,7 +38,7 @@ public class Player extends Entity implements PlayerEventListener {
 	public static float WALK_FORWARD_SPEED = 0.02f;
 	public static float AIR_WALK_DIVIDER = 1;
 	public static float SHIFT_DIVIDER = 3;
-	public static float JUMP_VELOCITY = 0.25f;
+	public static float JUMP_VELOCITY = 0.17f;
 	public static float ROTATE_SENSITIVITY = 0.25f;
 	public static int START_HEALTH = 20;
 	public static float SHIFT_DOWN = BlockRenderEngine.BLOCK_SIZE / 4;
@@ -66,6 +66,19 @@ public class Player extends Entity implements PlayerEventListener {
 	
 	private boolean isMoving = false;
 	
+	// Direction codes
+	
+	public byte direction = 0;
+	
+	public static final byte NORTH = 0;
+	public static final byte NORTHEAST = 1;
+	public static final byte EAST = 2;
+	public static final byte SOUTHEAST = 3;
+	public static final byte SOUTH = 4;
+	public static final byte SOUTHWEST = 5;
+	public static final byte WEST = 6;
+	public static final byte NORTHWEST = 7;
+	
 	public Player(Vector3f[] v, Vector3f t, Vector3f r, int g, Stage stage) {
 		super(v, t, r, g, stage); // Construct entity
 		
@@ -74,38 +87,38 @@ public class Player extends Entity implements PlayerEventListener {
 		physic.hasGravity = true;
 		
 		// Register events
-		
+
 		EventEngine.registerListener(this, new int[] {EventEngine.PLAYER});
 	}
 
 	public void playerUpdate() {
 		// Update physics
 		// Now updated through timers
-		
+
 		// Move camera
-		
+
 		Vector3f camTranslate = new Vector3f(translation.x, translation.y, translation.z);
-		camTranslate.y += BlockRenderEngine.BLOCK_SIZE * (4 - 0.45);
+		camTranslate.y += BlockRenderEngine.BLOCK_SIZE * 3.3f;
 		if (shifting) camTranslate.y -= SHIFT_DOWN;
 		RenderEngine.camera.position = camTranslate;
-		
+
 		// Rotate camera
-		
+
 		RenderEngine.camera.pitch = rotation.x;
 		RenderEngine.camera.yaw = rotation.y;
 		RenderEngine.camera.roll = rotation.z;
-		
+
 		// Void detection
-		
+
 		if (translation.y < VOIDPOS) {
 			EventEngine.executeEvent(EventEngine.PLAYER, "playerRespawn", new PlayerRespawnEvent(true));
 		}
-		
+
 		// Because events execute first:
-		
+
 		if (!isMoving) {			
 			speed -= FRICTION;
-			
+
 			if (speed < 0) {
 				speed = 0;
 			}
@@ -113,12 +126,33 @@ public class Player extends Entity implements PlayerEventListener {
 		else {
 			isMoving = false;
 		}
+		
+		// Update direction
+
+		float dirRot = calculateRotation(rotation.y);
+		
+		if (dirRot >= 338 || dirRot < 23) direction = WEST;
+		else if (dirRot >= 23 && dirRot < 68) direction = SOUTHWEST;
+		else if (dirRot >= 68 && dirRot < 113) direction = SOUTH;
+		else if (dirRot >= 113 && dirRot < 158) direction = SOUTHEAST;
+		else if (dirRot >= 158 && dirRot < 203) direction = EAST;
+		else if (dirRot >= 203 && dirRot < 248) direction = NORTHEAST;
+		else if (dirRot >= 248 && dirRot < 293) direction = NORTH;
+		else if (dirRot >= 293 && dirRot < 338) direction = NORTHWEST;
 	}
 
+	public float calculateRotation(float rot) {
+		float rotRet = rot % 360;
+		
+		if (rot < 0) rotRet += 360;
+				
+		return Math.abs(rotRet);
+	}
+	
 	@Override
 	public void playerMove(PlayerMoveEvent event) {
-//		physic.lastPosition = translation;
-		
+		//		physic.lastPosition = translation;
+
 		Vector2f moveRaw = event.moveDirection;
 		float totalDivider = 1;
 
@@ -146,12 +180,28 @@ public class Player extends Entity implements PlayerEventListener {
 		// Check if rotation is too much
 		
 		if (rotation.x > 90) rotation.x = 90;
-		if (rotation.x < -90) rotation.x = -90;
+		if (rotation.x < -90) rotation.x = -90;		
 	}
 
 	@Override
 	public void playerJump(PlayerJumpEvent event) {
 		if (grounded) physic.velocity.y = JUMP_VELOCITY;
+	}
+	
+	// Direction code decoder
+	
+	public static String decodeDirectionToString(byte dir) {
+		switch (dir) {
+		case NORTH: return "NORTH";
+		case NORTHEAST: return "NORTHEAST";
+		case EAST: return "EAST";
+		case SOUTHEAST: return "SOUTHEAST";
+		case SOUTH: return "SOUTH";
+		case SOUTHWEST: return "SOUTHWEST";
+		case WEST: return "WEST";
+		case NORTHWEST: return "NORTHWEST";
+		default: return null;
+		}
 	}
 	
 	// Player walk events

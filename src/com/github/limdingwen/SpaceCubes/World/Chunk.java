@@ -5,7 +5,6 @@ import com.github.limdingwen.SpaceCubes.BlockTypes.Block;
 import com.github.limdingwen.SpaceCubes.BlockTypes.Material;
 import com.github.limdingwen.SpaceCubes.DataTypes.Vector2i;
 import com.github.limdingwen.SpaceCubes.DataTypes.Vector3i;
-import com.github.limdingwen.SpaceCubes.Rendering.BlockRenderEngine;
 import com.github.limdingwen.SpaceCubes.Rendering.RenderEngine;
 
 public class Chunk {
@@ -21,6 +20,8 @@ public class Chunk {
 	//
 	protected int positionX;
 	protected int positionY;
+	
+	public boolean render = true;
 	
 	public Chunk(Block[][][] b, int x, int y) {
 		if (b != null) blocks = b.clone();
@@ -255,6 +256,10 @@ public class Chunk {
 		isLoaded = false;
 
 		blocks = new Block[World.CHUNK_LENGTH][World.CHUNK_HEIGHT][World.CHUNK_LENGTH];
+	}
+	
+	public void flagChunkUnload() {
+		isLoaded = false;
 	}
 	
 	public boolean getIsLoaded() {

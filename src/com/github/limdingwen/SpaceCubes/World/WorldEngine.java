@@ -3,7 +3,6 @@ package com.github.limdingwen.SpaceCubes.World;
 import org.lwjgl.opengl.Display;
 
 import com.github.limdingwen.SpaceCubes.Debug;
-import com.github.limdingwen.SpaceCubes.Main;
 
 public class WorldEngine {
 	public WorldEngine() {
