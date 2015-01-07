@@ -1,3 +1,3 @@
-### Moved to Github at https://github.com/limdingwen/space-cubes ###
+### Welcome to the Github repo! ###
 
-Please check there for future updates. The final update in this repo is 12w441.
+Versions > 12w441
