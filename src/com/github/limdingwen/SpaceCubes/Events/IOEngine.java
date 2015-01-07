@@ -87,7 +87,7 @@ public class IOEngine {
 		// Time manupilation
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
-			RenderEngine.world.time = 0;
+			RenderEngine.world.time += 100;
 		}
 	}
 }
