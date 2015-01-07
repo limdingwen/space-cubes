@@ -1,5 +1,0 @@
-package com.github.limdingwen.SpaceCubes.BlockTypes;
-
-
-public interface BlockEventListener {
-}
