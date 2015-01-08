@@ -12,7 +12,7 @@ public class Debug {
 	public final int LEVEL_OF_LOG = 1;
 
 	// -1: Turn off debugging
-	// 0: Error
+	// 0: Errors
 	// 1: Warnings and errors
 	// 2: Info, warnings and errors
 	
@@ -26,17 +26,18 @@ public class Debug {
 	}
 	
 	public static void info(String message) {
-		consoleOutput("INFO", message);
+		consoleOutput("INFO", LVL_INFO, message);
 	}
 	
 	public static void warning(String message) {
-		consoleOutput("WARNING", message);
+		consoleOutput("WARNING", LVL_WARN, message);
 	}
 	public static void error(String message) {
-		consoleOutput("SEVERE", message);
+		consoleOutput("SEVERE", LVL_ERROR, message);
 	}
 	
-	public static void consoleOutput(String prefix, String message) {
-		System.out.println(getTime() + ":" + prefix + " : " + message);
+	public static void consoleOutput(String prefix, int level, String message) {
+		if (LEVEL_OF_LOG >= level)
+			System.out.println(getTime() + ":" + prefix + " : " + message);
 	}
 }
