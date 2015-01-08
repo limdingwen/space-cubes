@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Debug {
-	public final int LVL_INFO = 2;
-	public final int LVL_WARN = 1;
-	public final int LVL_ERROR = 0;
+	public static final int LVL_INFO = 2;
+	public static final int LVL_WARN = 1;
+	public static final int LVL_ERROR = 0;
 
-	public final int LEVEL_OF_LOG = 1;
+	public static final int LEVEL_OF_LOG = 1;
 
 	// -1: Turn off debugging
 	// 0: Errors
@@ -27,8 +27,7 @@ public class Debug {
 	
 	public static void info(String message) {
 		consoleOutput("INFO", LVL_INFO, message);
-	}
-	
+	}	
 	public static void warning(String message) {
 		consoleOutput("WARNING", LVL_WARN, message);
 	}
