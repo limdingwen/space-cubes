@@ -4,7 +4,18 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Debug {	
+public class Debug {
+	public final int LVL_INFO = 2;
+	public final int LVL_WARN = 1;
+	public final int LVL_ERROR = 0;
+
+	public final int LEVEL_OF_LOG = 1;
+
+	// -1: Turn off debugging
+	// 0: Error
+	// 1: Warnings and errors
+	// 2: Info, warnings and errors
+	
 	static SimpleDateFormat sdf = new SimpleDateFormat("h:mm:ss a");
 	
 	public static void init() {
