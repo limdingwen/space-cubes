@@ -160,3 +160,10 @@ Pre-alpha 0.6.0 15w021:
 + Manifest
 * t key now fast forwards time
 * A bringback!
+
+Pre-alpha 0.6.0 15w022:
++ Natives for other OSes
++ U key for debugging chunks (deletes entire 18x18 area from x=2 and z=2.)
+* Fixed compile.sh not updating
+* Changed stone generation
+* Fixed cracked rock generation
