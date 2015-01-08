@@ -95,7 +95,7 @@ public class Chunk {
 					}
 					else {
 						if (Math.floor(Math.random() * 1.005) == 0) {
-							if (Math.floor(Math.random() * 0.5 + iy/30) == 0) {
+							if (Math.floor(Math.random() * (0.5 + iy/30)) == 0) {
 								blocks[ix][iy][iz].material = Material.ROCK.id;
 							}
 							else {
