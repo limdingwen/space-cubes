@@ -151,3 +151,12 @@ Added directions
 Found bug:
 Able to jump out of 2-block holes using corners
 Changed world length to 30
+
+Pre-alpha 0.6.0 15w021:
++ Better changelog format
++ Libraries and natives bounded with source
++ Compile script
++ Debugging levels (LOG, WARN, ERROR)
++ Manifest
+* t key now fast forwards time
+* A bringback!
