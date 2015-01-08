@@ -82,9 +82,9 @@ public class Chunk {
 		for (int ix = 0; ix < World.CHUNK_LENGTH; ix++) {
 			for (int iz = 0; iz < World.CHUNK_LENGTH; iz++) {
 				for (int iy = 0; iy < 60; iy++) {
-					//if (iy == 49) {
+					if (iy < 45) {
 						if (Math.floor(Math.random() * 1.1) == 0) {
-							if (Math.floor(Math.random() * 4) != 0) {
+							if (Math.floor(Math.random() * 2) == 0) {
 								blocks[ix][iy][iz].material = Material.ROCK.id;
 							}
 							else {
@@ -92,7 +92,18 @@ public class Chunk {
 								blocks[ix][iy][iz].material = Material.CRACKEDROCK.meta;
 							}
 						}
-					//}
+					}
+					else {
+						if (Math.floor(Math.random() * 1.005) == 0) {
+							if (Math.floor(Math.random() * 0.5 + iy/30) == 0) {
+								blocks[ix][iy][iz].material = Material.ROCK.id;
+							}
+							else {
+								blocks[ix][iy][iz].material = Material.CRACKEDROCK.id;
+								blocks[ix][iy][iz].material = Material.CRACKEDROCK.meta;
+							}
+						}
+					}
 				}
 			}
 		}
