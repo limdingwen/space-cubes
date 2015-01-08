@@ -83,8 +83,8 @@ public class Chunk {
 			for (int iz = 0; iz < World.CHUNK_LENGTH; iz++) {
 				for (int iy = 0; iy < 60; iy++) {
 					//if (iy == 49) {
-						if (Math.floor(Math.random() * 1.5) == 0) {
-							if (Math.floor(Math.random() * 2) == 0) {
+						if (Math.floor(Math.random() * 1.1) == 0) {
+							if (Math.floor(Math.random() * 4) != 0) {
 								blocks[ix][iy][iz].material = Material.ROCK.id;
 							}
 							else {
