@@ -88,7 +88,7 @@ public class Chunk {
 						}
 						else {
 							blocks[ix][iy][iz].material = Material.CRACKEDROCK.id;
-							blocks[ix][iy][iz].material = Material.CRACKEDROCK.meta;
+							blocks[ix][iy][iz].meta = Material.CRACKEDROCK.meta;
 						}
 					}
 				}
