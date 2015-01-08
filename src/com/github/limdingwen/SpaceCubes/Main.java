@@ -30,7 +30,7 @@ public class Main {
 	
 	// VERSION: <Alpha/Beta/Release> <Version> Snapshot <Year>w<Week><Build>
 	
-	public static final String VERSION_NO = "Pre-Alpha 0.6.0 15w022";
+	public static final String VERSION_NO = "Pre-Alpha 0.6.0 Snapshot 15w022";
 	
 	public static final int FPS = 60;
 	
