@@ -2,9 +2,6 @@
 
 Versions > 12w441
 
-New version style:
-0.6.0 etc
-
 ### Binary sources ###
 
 Releases of binary files
