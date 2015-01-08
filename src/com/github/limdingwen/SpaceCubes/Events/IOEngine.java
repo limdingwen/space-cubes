@@ -5,6 +5,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.github.limdingwen.SpaceCubes.DataTypes.Vector3i;
 import com.github.limdingwen.SpaceCubes.Main;
 import com.github.limdingwen.SpaceCubes.BlockTypes.Material;
 import com.github.limdingwen.SpaceCubes.File.ChunkLevelEncoder;
@@ -88,6 +89,18 @@ public class IOEngine {
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
 			RenderEngine.world.time += 100;
+		}
+
+		// Debug
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_U)) {
+			for (int x = 2; x < 20; x++) {
+				for (int y = 1; y < 128; y++) {
+					for (int z = 2; z < 20; z++) {
+						EventEngine.executeEvent(EventEngine.PLAYER, "playerBreakBlock", new PlayerBreakBlock(RenderEngine.world.coordBlockToReal(new Vector3i(x, y, z))));
+					}
+				}
+			}
 		}
 	}
 }
