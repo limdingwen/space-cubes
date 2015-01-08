@@ -1,0 +1,5 @@
+Manifest-Version: 0.6
+Created-By: 1.7.0_06 (Oracle Corporation)
+Main-Class: com.github.limdingwen.SpaceCubes.Main
+Class-Path: lib/guava-13.0.1.jar lib/jinput.jar lib/jna.jar lib/lwjgl.jar lib/lwjgl_util.jar lib/PNGDecoder.jar
+
